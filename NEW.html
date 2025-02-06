@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #ffccdc;
+            font-family: Arial, sans-serif;
+        }
+        #timer {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        #celebration {
+            display: none;
+            font-size: 3em;
+            color: #e60073;
+            font-weight: bold;
+            animation: fadeIn 2s;
+        }
+        #message-container {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+        .btn {
+            background-color: #e60073;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #cc0052;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Countdown to Your Special Day!</h1>
+    <div id="timer"></div>
+    <div id="celebration">?? Happy Birthday chiku! ??</div>
+    <img id="cake" class="hidden" src="https://cdn.pixabay.com/photo/2017/05/30/22/55/birthday-2358333_960_720.jpg" width="300">
+    <button id="reveal-btn" class="btn hidden">Reveal Message</button>
+    <div id="message-container" class="hidden">?? Wishing you a day filled with love, laughter, and joy! ??</div>
+
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const birthday = new Date();
+            birthday.setHours(24, 0, 0, 0);
+            const diff = birthday - now;
+
+            if (diff <= 0) {
+                document.getElementById("timer").style.display = "none";
+                document.getElementById("celebration").style.display = "block";
+                document.getElementById("cake").classList.remove("hidden");
+                document.getElementById("reveal-btn").classList.remove("hidden");
+            } else {
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+                document.getElementById("timer").innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        document.getElementById("reveal-btn").addEventListener("click", function() {
+            document.getElementById("message-container").classList.remove("hidden");
+            this.style.display = "none";
+        });
+
+        updateTimer();
+    </script>
+</body>
+</html>
